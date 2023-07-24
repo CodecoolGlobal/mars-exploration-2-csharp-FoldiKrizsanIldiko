@@ -1,4 +1,5 @@
 ﻿using Codecool.MarsExploration.MapExplorer.Configuration;
+using Codecool.MarsExploration.MapExplorer.MapLoader;
 using Codecool.MarsExploration.MapGenerator.Calculators.Model;
 using Codecool.MarsExploration.MapGenerator.Configuration;
 
@@ -14,13 +15,16 @@ class Program
         Coordinate landingSpot = new Coordinate(6, 6);
         IEnumerable<string> resources = new List<string>()
         {
-            "🏔️",//mountain
-            "🕳️",//pit
-            "💎",//mineral
-            "🌊"//water
+            "#",//mountain"🏔️",
+            "&",//pit"🕳️"
+            "*",//mineral💎
+            "%"//water🌊
         };
         int stepNumber = 300;
 
         Config firstConfiguration = new Config(mapFile, landingSpot, resources, stepNumber);
+
+        IMapLoader mapLoader = new MapLoader.MapLoader();
+        mapLoader.Load(mapFile);
     }
 }
