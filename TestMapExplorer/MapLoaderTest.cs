@@ -6,27 +6,24 @@ namespace TestMapExplorer;
 public class MapLoaderTest
 {
     [Test]
-   public void TestCaracterNumbers()
-   {
-       string[,] map = new string[,]
-       {
-           { "1", "1", "1" },
-           { "1", "1", "1" },
-           { "1", "1", "1" }
-       };
-       Map testMap = new Map(map, true);
-       
-      //arrange
-      IMapLoader mapLoader = new MapLoader();
-      
-      //act
-     
-       Map result = mapLoader.Load("C:\\Users\\fkild\\Codecool\\OOP_module\\4_TW\\mars-exploration-2-csharp-FoldiKrizsanIldiko\\TestMapExplorer\\FakeMap.map");
+    public void TestMapEquality()
+    {
+        //arrange
+        string[,] map = new string[,]
+        {
+            { "1", "1", "1" },
+            { "1", "1", "1" },
+            { "1", "1", "1" }
+        };
+        Map testMap = new Map(map, true);
+        IMapLoader mapLoader = new MapLoader();
 
-      //assert
-      //egyforma-e a méretük
- 
-      Assert.AreEqual(testMap.Representation, result.Representation);
-      Assert.AreEqual(testMap.SuccessfullyGenerated, result.SuccessfullyGenerated);
-   }
+        //act
+        var workDir = AppDomain.CurrentDomain.BaseDirectory;
+        Map result = mapLoader.Load($"{workDir}\\FakeMap.map");
+        //assert
+
+        Assert.AreEqual(testMap.Representation, result.Representation);
+        Assert.AreEqual(testMap.SuccessfullyGenerated, result.SuccessfullyGenerated);
+    }
 }

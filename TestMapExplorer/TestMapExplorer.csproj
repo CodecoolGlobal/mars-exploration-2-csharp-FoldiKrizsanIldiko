@@ -20,4 +20,11 @@
       <ProjectReference Include="..\Codecool.MarsExploration.MapExplorer\Codecool.MarsExploration.MapExplorer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="FakeMap.map" />
+      <Content Include="FakeMap.map">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
