@@ -26,6 +26,7 @@ public class MapLoaderTest
       //assert
       //egyforma-e a méretük
  
-      Assert.That(testMap,Is.EqualTo(result) );
+      Assert.AreEqual(testMap.Representation, result.Representation);
+      Assert.AreEqual(testMap.SuccessfullyGenerated, result.SuccessfullyGenerated);
    }
 }
