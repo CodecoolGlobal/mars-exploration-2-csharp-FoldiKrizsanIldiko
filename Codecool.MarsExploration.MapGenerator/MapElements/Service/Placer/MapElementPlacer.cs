@@ -5,11 +5,11 @@ namespace Codecool.MarsExploration.MapGenerator.MapElements.Service.Placer;
 
 public class MapElementPlacer : IMapElementPlacer
 {
-    public bool CanPlaceElement(MapElement element, string?[,] map, Coordinate coordinate)
+    public bool CanPlaceElement(MapElement element, ref string?[,] map, Coordinate coordinate)
     {
         return element.Dimension == 1
             ? CanPlaceOneDimensionalElement(map, coordinate)
-            : CanPlaceMultiDimensionalElement(element, map, coordinate);
+            : CanPlaceMultiDimensionalElement(element, ref map, coordinate);
     }
 
     private static bool CanPlaceOneDimensionalElement(string?[,] map, Coordinate coordinate)
@@ -18,10 +18,10 @@ public class MapElementPlacer : IMapElementPlacer
                && coordinate.X < map.GetLength(0)
                && coordinate.Y >= 0
                && coordinate.Y < map.GetLength(1)
-               && map[coordinate.X, coordinate.Y] == null;
+               && (map[coordinate.X, coordinate.Y] == null||map[coordinate.X, coordinate.Y] =="|"||map[coordinate.X, coordinate.Y] == "/");
     }
 
-    private static bool CanPlaceMultiDimensionalElement(MapElement element, string?[,] map, Coordinate coordinate)
+    private static bool CanPlaceMultiDimensionalElement(MapElement element, ref string?[,] map, Coordinate coordinate)
     {
         if (coordinate.X + element.Dimension >= map.GetLength(0) || coordinate.X < 0)
         {
@@ -33,20 +33,28 @@ public class MapElementPlacer : IMapElementPlacer
             return false;
         }
 
-        var allXCoordinates =
-            Enumerable.Range(coordinate.X, element.Dimension)
-                .Select(e => coordinate with { X = e });
+        List<Coordinate> coordinateListForSquare = new List<Coordinate>();
 
-        var allYCoordinates =
-            Enumerable.Range(coordinate.Y, element.Dimension)
-                .Select(e => coordinate with { Y = e });
+        for (int i = coordinate.X; i < element.Dimension + coordinate.X; i++)
+        {
+            for (int j = coordinate.Y; j < element.Dimension + coordinate.Y; j++)
+            {
+                coordinateListForSquare.Add(new Coordinate(i, j));
+            }
+        }
 
+        foreach (var c in coordinateListForSquare)
+        {
+            if (map[c.X, c.Y] != null)
+            {
+                return false;
+            }
+        }
 
-        return map[coordinate.X, coordinate.Y] == null
-               && allXCoordinates.Concat(allYCoordinates).All(c => map[c.X, c.Y] == null);
+        return true;
     }
 
-    public void PlaceElement(MapElement element, string?[,] map, Coordinate coordinate)
+    public void PlaceElement(MapElement element, ref string?[,] map, Coordinate coordinate)
     {
         for (int i = 0; i < element.Representation.GetLength(0); i++)
         {

@@ -29,21 +29,21 @@ internal class Program
             new MapGenerator(mapConfigValidator, mapElementsGenerator, coordinateCalculator, dimensionCalculator,
                 mapElementPlacer);
 
-        CreateAndWriteMaps(3, mapGenerator, mapConfig);
-
+        CreateAndWriteMaps(5, mapGenerator, mapConfig);
+        
         Console.WriteLine("Mars maps successfully generated.");
         Console.ReadKey();
     }
 
     private static void CreateAndWriteMaps(int count, IMapGenerator mapGenerator, MapConfiguration mapConfig)
     {
-        var mapFileWriter = new MapFileWriter();
+        IMapFileWriter mapFileWriter = new MapFileWriter();
 
-        foreach (var cnt in Enumerable.Range(0, count))
+        foreach (var cnt in Enumerable.Range(0, count))//ez sokkal reálisabb lenne for ciklussal
         {
             string outputFile = @$"{WorkDir}\exploration-{cnt}.map";
-            var map = mapGenerator.Generate(mapConfig);
-
+            var map = mapGenerator.Generate(mapConfig); //itt indul a buli
+            
             if (map.SuccessfullyGenerated)
             {
                 mapFileWriter.WriteMapFile(map, outputFile);
@@ -55,8 +55,8 @@ internal class Program
     {
         const string mountainSymbol = "#";
         const string pitSymbol = "&";
-        const string mineralSymbol = "%";
-        const string waterSymbol = "*";
+        const string mineralSymbol = "*";
+        const string waterSymbol = "%";
 
         var mountainsCfg = new MapElementConfiguration(mountainSymbol, "mountain", new[]
         {
@@ -81,6 +81,6 @@ internal class Program
         }, 0, pitSymbol);
 
         List<MapElementConfiguration> elementsCfg = new() { mountainsCfg, pitsCfg, mineralsCfg, waterCfg };
-        return new MapConfiguration(1000, 0.5, elementsCfg);
+        return new MapConfiguration(1600, 0.5, elementsCfg);
     }
 }

@@ -49,6 +49,24 @@ public class MapElementBuilder : IMapElementBuilder
             }
         }
 
-        return new MapElement(representation, name, dimension, preferredLocationSymbol);
+        for (int i = 0; i < representation.GetLength(0); i++)
+        {
+            for (int j = 0; j < representation.GetLength(1); j++)
+            {
+                if (symbol == "#")
+                {
+                    if (representation[i, j] == null) representation[i, j] = "|";
+                } else if (symbol == "&")
+                {
+                    if (representation[i, j] == null) representation[i, j] = "/";
+                }
+            }
+        }
+
+
+        MapElement toReturn = new MapElement(representation, name, dimension, preferredLocationSymbol);
+       // Console.WriteLine(toReturn);
+        //Console.WriteLine("_______________________________________");
+        return toReturn;
     }
 }
