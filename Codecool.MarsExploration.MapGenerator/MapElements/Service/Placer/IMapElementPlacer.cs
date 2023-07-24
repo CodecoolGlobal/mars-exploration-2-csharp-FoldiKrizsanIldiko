@@ -5,6 +5,6 @@ namespace Codecool.MarsExploration.MapGenerator.MapElements.Service.Placer;
 
 public interface IMapElementPlacer
 {
-    bool CanPlaceElement(MapElement element, string?[,] map, Coordinate coordinate);
-    void PlaceElement(MapElement element, string?[,] map, Coordinate coordinate);
+    bool CanPlaceElement(MapElement element,ref string?[,] map, Coordinate coordinate);
+    void PlaceElement(MapElement element,ref string?[,] map, Coordinate coordinate);
 }

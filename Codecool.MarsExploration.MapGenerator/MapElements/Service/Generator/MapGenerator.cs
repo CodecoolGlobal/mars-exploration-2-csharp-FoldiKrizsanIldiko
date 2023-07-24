@@ -36,6 +36,7 @@ public class MapGenerator : IMapGenerator
     {
         if (!_mapConfigValidator.Validate(mapConfig))
         {
+           
             return EmptyMap;
         }
 
@@ -43,20 +44,35 @@ public class MapGenerator : IMapGenerator
         string?[,] map = new string?[dimension, dimension];
 
         var elements =
-            new Stack<MapElement>(_mapElementsGenerator.CreateAll(mapConfig).OrderBy(e => e.Dimension));
+            new Stack<MapElement>(_mapElementsGenerator.CreateAll(mapConfig).OrderBy(e => e.Dimension));//make ascending first is smallest [1,1,8,8...]
 
         while (elements.Any())
         {
-            var element = elements.Pop();
+            var element = elements.Pop(); // get LAST element, alias greatest
             var coord = GetTargetCoordinate(element, map);
-            if (_mapElementPlacer.CanPlaceElement(element, map, coord))
+            if (_mapElementPlacer.CanPlaceElement(element,ref map, coord))
             {
-                _mapElementPlacer.PlaceElement(element, map, coord);
+                _mapElementPlacer.PlaceElement(element,ref map, coord);
             }
             else
             {
                 elements.Push(element);
             }
+        }
+        int rows = map.GetLength(0);
+        int columns = map.GetLength(1);
+                
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                if (map[i, j] == null)
+                {
+                    map[i, j] = " ";
+                } 
+                Console.Write(map[i, j]); // Adjust the spacing as needed
+            }
+            Console.WriteLine();
         }
 
         return new Map(map, true);
@@ -93,7 +109,9 @@ public class MapGenerator : IMapGenerator
 
     private IEnumerable<Coordinate> GetEmptyAdjacent(IEnumerable<Coordinate> coordinates, string?[,] map)
     {
-        return _coordinateCalculator.GetAdjacentCoordinates(coordinates, map.GetLength(0))
-            .Where(c => map[c.X, c.Y] == null);
+        var toRetun = _coordinateCalculator.GetAdjacentCoordinates(coordinates, map.GetLength(0))//nálunk GetAdjeForMany
+                                  .Where(c => map[c.X, c.Y] == "null" || map[c.X, c.Y] == "/" || map[c.X, c.Y] == "|" );
+        
+        return toRetun;
     }
 }
