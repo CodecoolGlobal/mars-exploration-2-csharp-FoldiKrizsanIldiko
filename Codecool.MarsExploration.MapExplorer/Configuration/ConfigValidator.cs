@@ -35,7 +35,7 @@ public class ConfigValidator : IConfigValidator
 
    private bool IsFilePathValid()
    {
-      if (_configuration.filepath.Length > 0)
+      if (_configuration.filepath.Trim().Length > 0)
       {
          return true;
       }
