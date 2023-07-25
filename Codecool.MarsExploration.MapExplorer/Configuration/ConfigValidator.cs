@@ -35,17 +35,34 @@ public class ConfigValidator : IConfigValidator
 
    private bool IsFilePathValid()
    {
-      return _configuration.filepath.Length > 0;
+      if (_configuration.filepath.Length > 0)
+      {
+         return true;
+      }
+
+      Console.WriteLine("Filepath is invalid.");
+      return false;
    }
 
    private bool AreResourcesSpecified()
    {
-      return _configuration.resources.Any();
+      if (_configuration.resources.Any())
+      {
+         return true;
+      }
+
+      Console.WriteLine("Resources are not specified.");
+      return false;
    }
 
    private bool IsTimeoutValid()
    {
-      return _configuration.steps > 0;
+      if (_configuration.steps > 0)
+      {
+         return true;
+      }
+      Console.WriteLine("Number of steps is zero.");
+      return false;
    }
    
    private bool HasEmptyAdjacent(Coordinate coordinate, string?[,] map)
