@@ -35,11 +35,10 @@ public class ConfigValidator : IConfigValidator
 
    private bool IsFilePathValid()
    {
-      if (_configuration.filepath.Trim().Length > 0)
+      if (File.Exists(_configuration.filepath) && Path.GetExtension(_configuration.filepath) == ".map")
       {
          return true;
       }
-
       Console.WriteLine("Filepath is invalid.");
       return false;
    }
