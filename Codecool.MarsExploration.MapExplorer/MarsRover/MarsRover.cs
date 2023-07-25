@@ -11,11 +11,17 @@ public class MarsRover
 
     private readonly int _roverCounter = 1;
 
-    public MarsRover(Coordinate currentPosition, int sightDistance, Dictionary<string, List<Coordinate>> encounteredResources)
+    public MarsRover(Coordinate currentPosition, Dictionary<string, List<Coordinate>> encounteredResources,
+        int sightDistance = 2)
     {
         Id = $"Rover-{_roverCounter}";
         CurrentPosition = currentPosition;
         SightDistance = sightDistance;
         EncounteredResources = new Dictionary<string, List<Coordinate>>();
+    }
+
+    public override string ToString()
+    {
+        return $"{Id} is on the [{CurrentPosition.X}, {CurrentPosition.Y}] coordinate.";
     }
 }
