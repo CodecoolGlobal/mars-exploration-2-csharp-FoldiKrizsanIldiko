@@ -13,7 +13,8 @@ class Program
 
     public static void Main(string[] args)
     {
-        ILogger logger = new ConsoleLogger();
+        ILogger cLogger = new ConsoleLogger();
+        ILogger fLogger = new FileLogger($@"{WorkDir}\Output\log.txt");
         string mapFile = $@"{WorkDir}\Resources\exploration-0.map";
         Coordinate landingSpot = new Coordinate(3, 3);
         IEnumerable<string> resources = new List<string>()
@@ -35,7 +36,8 @@ class Program
         if (configValidator.IsConfigValid())
         {
             RoverDeployer roverDeployer = new RoverDeployer(firstConfiguration);
-            logger.Log(roverDeployer.Rover.ToString()); 
+            cLogger.Log(roverDeployer.Rover.ToString()); 
+            fLogger.Log(roverDeployer.Rover.ToString());
         }
     }
 }
