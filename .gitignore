@@ -2,15 +2,15 @@
 .idea/
 
 # Compiled output
-/bin/
-/obj/
+bin/
+obj/
 
 # Local application files
-/appsettings.json
-/appsettings.Development.json
+appsettings.json
+appsettings.Development.json
 
 # NuGet packages
-/packages/
+packages/
 
 # Visual Studio Code files
 .vscode/
