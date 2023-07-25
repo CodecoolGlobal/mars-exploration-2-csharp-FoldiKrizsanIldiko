@@ -29,7 +29,7 @@ public class ConfigValidator : IConfigValidator
       {
          return true;
       }
-      Console.WriteLine("landingSpot is not empty or has no empty adjacent coordinate.");
+      Console.WriteLine("LandingSpot is not empty or has no empty adjacent coordinate.");
          return false;
    }
 
