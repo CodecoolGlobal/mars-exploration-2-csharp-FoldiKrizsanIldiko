@@ -23,7 +23,7 @@ public class MapLoaderTest
         Map result = mapLoader.Load($"{workDir}\\FakeMap.map");
         //assert
 
-        Assert.AreEqual(testMap.Representation, result.Representation);
-        Assert.AreEqual(testMap.SuccessfullyGenerated, result.SuccessfullyGenerated);
+        Assert.That(result.Representation, Is.EqualTo(testMap.Representation));
+        Assert.That(result.SuccessfullyGenerated, Is.EqualTo(testMap.SuccessfullyGenerated));
     }
 }
