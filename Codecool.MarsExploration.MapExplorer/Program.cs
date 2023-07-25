@@ -12,7 +12,7 @@ class Program
     public static void Main(string[] args)
     {
         string mapFile = $@"{WorkDir}\Resources\exploration-0.map";
-        Coordinate landingSpot = new Coordinate(6, 6);
+        Coordinate landingSpot = new Coordinate(2, 26);
         IEnumerable<string> resources = new List<string>()
         {
             "#",//mountain"🏔️",
@@ -23,8 +23,12 @@ class Program
         int stepNumber = 300;
 
         Config firstConfiguration = new Config(mapFile, landingSpot, resources, stepNumber);
+        
+        // IMapLoader mapLoader = new MapLoader.MapLoader();
+        // mapLoader.Load(mapFile);
 
-        IMapLoader mapLoader = new MapLoader.MapLoader();
-        mapLoader.Load(mapFile);
+        
+        IConfigValidator configValidator = new ConfigValidator(firstConfiguration);
+        configValidator.IsConfigValid();
     }
 }

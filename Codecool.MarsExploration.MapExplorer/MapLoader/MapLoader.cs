@@ -33,7 +33,7 @@ public class MapLoader : IMapLoader
                 FillByLine(loadedMap, characters, mapInString, ref rowCounter);
             }
 
-            Console.WriteLine(mapInString.Length);
+            // Console.WriteLine(mapInString.Length);
             return new Map(mapInString, true);
         }
     }
@@ -44,8 +44,8 @@ public class MapLoader : IMapLoader
         {
             characters.Add(loadedMap[i].ToString());
         }
-        characters.ToList().ForEach(e => Console.Write(e));
-        Console.WriteLine();
+        // characters.ToList().ForEach(e => Console.Write(e));
+        // Console.WriteLine();
         for (int i = 0; i < characters.Count; i++)
         {
             mapInString[rowCounter, i] = characters[i];
