@@ -16,13 +16,14 @@ public class MapLoaderTest
             { "1", "1", "1" }
         };
         Map testMap = new Map(map, true);
+    //    Map testMap1 = new Map(map, true);
         IMapLoader mapLoader = new MapLoader();
 
         //act
         var workDir = AppDomain.CurrentDomain.BaseDirectory;
         Map result = mapLoader.Load($"{workDir}\\FakeMap.map");
         //assert
-
+      //  Assert.That(testMap, Is.EqualTo(result));
         Assert.That(result.Representation, Is.EqualTo(testMap.Representation));
         Assert.That(result.SuccessfullyGenerated, Is.EqualTo(testMap.SuccessfullyGenerated));
     }

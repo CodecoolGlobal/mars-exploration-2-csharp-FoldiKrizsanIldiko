@@ -40,4 +40,23 @@ public record Map(string?[,] Representation, bool SuccessfullyGenerated = false)
     {
         return CreateStringRepresentation(Representation);
     }
+
+    // private sealed class MapEqualityComparer : IEqualityComparer<Map>
+    // {
+    //     public bool Equals(Map x, Map y)
+    //     {
+    //         if (ReferenceEquals(x, y)) return true;
+    //         if (ReferenceEquals(x, null)) return false;
+    //         if (ReferenceEquals(y, null)) return false;
+    //         if (x.GetType() != y.GetType()) return false;
+    //         return x.Representation.Equals(y.Representation) && x.SuccessfullyGenerated == y.SuccessfullyGenerated;
+    //     }
+    //
+    //     public int GetHashCode(Map obj)
+    //     {
+    //         return HashCode.Combine(obj.Representation, obj.SuccessfullyGenerated);
+    //     }
+    // }
+    //
+    // public static IEqualityComparer<Map> MapComparer { get; } = new MapEqualityComparer();
 }

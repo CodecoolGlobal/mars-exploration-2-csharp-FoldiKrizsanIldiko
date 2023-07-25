@@ -23,21 +23,22 @@ public class MapLoader : IMapLoader
 
             // Process the first line
             List<string> characters = new List<string>();//first line of map separated to strings
-            FillByLine(firstLine, characters, mapInString, rowCounter);
+            FillByLine(firstLine, characters, mapInString,ref rowCounter);
 
             // Process the rest of the lines
             string loadedMap;
             while ((loadedMap = _streamReader.ReadLine()) != null)
             {
                 characters.Clear();
-                FillByLine(loadedMap, characters, mapInString, rowCounter);
+                FillByLine(loadedMap, characters, mapInString, ref rowCounter);
             }
 
+            Console.WriteLine(mapInString.Length);
             return new Map(mapInString, true);
         }
     }
 
-    private void FillByLine(string loadedMap, List<string> characters, string[,] mapInString, int rowCounter)
+    private void FillByLine(string loadedMap, List<string> characters, string[,] mapInString,ref int rowCounter)
     {
         for (int i = 0; i < loadedMap.Length; i++)
         {
