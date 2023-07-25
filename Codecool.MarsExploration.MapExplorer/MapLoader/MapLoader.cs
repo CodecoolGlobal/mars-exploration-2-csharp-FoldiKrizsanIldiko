@@ -22,68 +22,33 @@ public class MapLoader : IMapLoader
             string[,] mapInString = new string[arrayLength, arrayLength];
 
             // Process the first line
-            List<string> characters = new List<string>();
-            for (int i = 0; i < firstLine.Length; i++)
-            {
-                characters.Add(firstLine[i].ToString());
-            }
-
-            for (int i = 0; i < characters.Count; i++)
-            {
-                mapInString[rowCounter, i] = characters[i];
-            }
-            rowCounter++;
+            List<string> characters = new List<string>();//first line of map separated to strings
+            FillByLine(firstLine, characters, mapInString, rowCounter);
 
             // Process the rest of the lines
             string loadedMap;
             while ((loadedMap = _streamReader.ReadLine()) != null)
             {
                 characters.Clear();
-                for (int i = 0; i < loadedMap.Length; i++)
-                {
-                    characters.Add(loadedMap[i].ToString());
-                }
-
-                for (int i = 0; i < characters.Count; i++)
-                {
-                    mapInString[rowCounter, i] = characters[i];
-                }
-                rowCounter++;
+                FillByLine(loadedMap, characters, mapInString, rowCounter);
             }
 
             return new Map(mapInString, true);
         }
     }
-    // public Map Load(string mapFile)
-    // {
-    //     StreamReader getLenghtOfArray = new StreamReader(mapFile);
-    //     StreamReader _streamReader = new StreamReader(mapFile);
-    //     
-    //     int rowCounter = 0;
-    //     
-    //     var lenghtOfArray = _streamReader.ReadLine();
-    //     _streamReader.Close();
-    //     
-    //     string[,] mapInString = new string[lenghtOfArray.Length,lenghtOfArray.Length];
-    //     while (_streamReader.ReadLine()!= null)
-    //     {
-    //         var loadedMap = _streamReader.ReadLine();
-    //         List<string> characters = new List<string>() ;
-    //         for (int i = 0; i < loadedMap.Length; i++)
-    //         {
-    //             characters.Add(loadedMap[i].ToString());
-    //         }
-    //         
-    //         characters.ToList().ForEach(e => Console.Write(e));
-    //         Console.WriteLine();
-    //         for (int i = 0; i < characters.Count; i++)
-    //         {
-    //             mapInString[rowCounter,i] = characters[i];
-    //         }
-    //         rowCounter++;
-    //     }
-    //
-    //     Console.WriteLine();
-    //     return new Map(mapInString, true);
-    // }
+
+    private void FillByLine(string loadedMap, List<string> characters, string[,] mapInString, int rowCounter)
+    {
+        for (int i = 0; i < loadedMap.Length; i++)
+        {
+            characters.Add(loadedMap[i].ToString());
+        }
+        characters.ToList().ForEach(e => Console.Write(e));
+        Console.WriteLine();
+        for (int i = 0; i < characters.Count; i++)
+        {
+            mapInString[rowCounter, i] = characters[i];
+        }
+        rowCounter++;
+    }
 }
