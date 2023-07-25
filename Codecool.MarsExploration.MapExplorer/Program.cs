@@ -1,5 +1,6 @@
 ﻿using Codecool.MarsExploration.MapExplorer.Configuration;
 using Codecool.MarsExploration.MapExplorer.MapLoader;
+using Codecool.MarsExploration.MapExplorer.MarsRover;
 using Codecool.MarsExploration.MapGenerator.Calculators.Model;
 using Codecool.MarsExploration.MapGenerator.Configuration;
 
@@ -12,7 +13,7 @@ class Program
     public static void Main(string[] args)
     {
         string mapFile = $@"{WorkDir}\Resources\exploration-0.map";
-        Coordinate landingSpot = new Coordinate(2, 26);
+        Coordinate landingSpot = new Coordinate(3, 3);
         IEnumerable<string> resources = new List<string>()
         {
             "#",//mountain"🏔️",
@@ -30,5 +31,8 @@ class Program
         
         IConfigValidator configValidator = new ConfigValidator(firstConfiguration);
         configValidator.IsConfigValid();
+
+        RoverDeployer roverDeployer = new RoverDeployer(firstConfiguration);
+        Console.WriteLine(roverDeployer.Rover);
     }
 }
