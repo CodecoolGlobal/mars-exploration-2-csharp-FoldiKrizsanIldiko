@@ -12,11 +12,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="bin\Debug\net6.0\Output\" />
       <Folder Include="MarsRover" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Resources\exploration-0.map" />
+      <Content Include="bin\Debug\net6.0\Resources\exploration-0.map" />
+      <Content Include="bin\Debug\net6.0\Resources\exploration-1.map" />
+      <Content Include="bin\Debug\net6.0\Resources\exploration-2.map" />
       <Content Include="Resources\exploration-0.map" />
       <None Remove="Resources\exploration-1.map" />
       <Content Include="Resources\exploration-1.map" />
