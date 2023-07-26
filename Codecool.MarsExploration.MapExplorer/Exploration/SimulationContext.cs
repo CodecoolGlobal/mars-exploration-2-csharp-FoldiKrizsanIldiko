@@ -34,10 +34,10 @@ public class SimulationContext
 
     private MapLoader.MapLoader _mapLoader = new MapLoader.MapLoader();
 
-    public SimulationContext(int numberOfSteps, int timeOutSteps, MarsRover.MarsRover marsRover, Config config)
+    public SimulationContext(int numberOfSteps, MarsRover.MarsRover marsRover, Config config)
     {
         NumberOfSteps = numberOfSteps;
-        TimeOutSteps = timeOutSteps;
+        TimeOutSteps = config.steps;
         MarsRover = marsRover;
         LocationOfShip = config.landingPoint;
         Map = _mapLoader.Load(config.filepath);
