@@ -21,11 +21,17 @@
       <Content Include="bin\Debug\net6.0\Resources\exploration-0.map" />
       <Content Include="bin\Debug\net6.0\Resources\exploration-1.map" />
       <Content Include="bin\Debug\net6.0\Resources\exploration-2.map" />
-      <Content Include="Resources\exploration-0.map" />
+      <Content Include="Resources\exploration-0.map">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Resources\exploration-1.map" />
-      <Content Include="Resources\exploration-1.map" />
+      <Content Include="Resources\exploration-1.map">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Resources\exploration-2.map" />
-      <Content Include="Resources\exploration-2.map" />
+      <Content Include="Resources\exploration-2.map">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
