@@ -23,12 +23,21 @@ public class RoverDeployer
 
     private MarsRover CreateAndDeployMarsRover()
     {
+        IConfigValidator configValidator = new ConfigValidator(Configuration);
+        if (!configValidator.IsConfigValid())
+        {
+            throw new Exception("Invalid config exception.");
+        }
+        
         _map = _mapLoader.Load(Configuration.filepath);
+        
         var possibleStartingPointOfRover = _coordinateCalculator.GetAdjacentCoordinates(Configuration.landingPoint, _map.Representation.GetLength(0))
             .Where(c => _map.Representation[c.X, c.Y] == " ");
+        
         Random random = new Random();
         Coordinate startingPointOfRover =
             possibleStartingPointOfRover.ToList()[random.Next(possibleStartingPointOfRover.Count())];
+        
         return new MarsRover(startingPointOfRover);
     }
     
