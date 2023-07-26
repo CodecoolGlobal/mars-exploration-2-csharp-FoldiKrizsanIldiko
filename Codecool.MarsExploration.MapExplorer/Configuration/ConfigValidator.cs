@@ -7,25 +7,26 @@ namespace Codecool.MarsExploration.MapExplorer.Configuration;
 public class ConfigValidator : IConfigValidator
 {
    private readonly Config _configuration;
-   private readonly Map _mapOfConfig;
    private readonly MapLoader.MapLoader _mapLoader = new ();
    private readonly ICoordinateCalculator _coordinateCalculator = new CoordinateCalculator();
 
    public ConfigValidator(Config configuration)
    {
       _configuration = configuration;
-      _mapOfConfig = _mapLoader.Load(configuration.filepath);
+     
    }
 
    public bool IsConfigValid()
    {
-      return IsLandingSpotValid() && IsFilePathValid() && AreResourcesSpecified() && IsTimeoutValid();
+      if (!IsFilePathValid()) return false;
+      Map mapOfConfig = _mapLoader.Load(_configuration.filepath);//ez van rossz helyen
+      return IsLandingSpotValid(mapOfConfig) &&  AreResourcesSpecified() && IsTimeoutValid();
    }
    
-   private bool IsLandingSpotValid()
+   private bool IsLandingSpotValid(Map map)
    {
       Coordinate landingSpot = _configuration.landingPoint;
-      if (_mapOfConfig.IsEmpty(landingSpot) && HasEmptyAdjacent(landingSpot, _mapOfConfig.Representation))
+      if (map.IsEmpty(landingSpot) && HasEmptyAdjacent(landingSpot, map.Representation))
       {
          return true;
       }
