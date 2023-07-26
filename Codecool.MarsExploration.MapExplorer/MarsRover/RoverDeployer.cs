@@ -12,7 +12,7 @@ public class RoverDeployer
     public MarsRover Rover;
     private readonly ICoordinateCalculator _coordinateCalculator = new CoordinateCalculator();
     private readonly IMapLoader _mapLoader = new MapLoader.MapLoader();
-    private Map _map;
+    public Map _map;
     
 
     public RoverDeployer(Config configuration)

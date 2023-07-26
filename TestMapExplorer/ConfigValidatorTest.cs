@@ -40,14 +40,6 @@ public class ConfigValidatorTest
         Config testConfig = new Config(filePath, landingPoint, resources, steps);
         IConfigValidator _configValidator = new ConfigValidator(testConfig);
         //act
-       return _configValidator.IsConfigValid();
+        return _configValidator.IsConfigValid();
     }
-
-// IsConfigValid
-// fakemap módosítani: nagyobb, üres helyekkel
-// jó adatokkal
-// hibás térképpel
-// hibás filepath-al
-// hibás timeouttal
-// hibás recourse specified-dal
 }
