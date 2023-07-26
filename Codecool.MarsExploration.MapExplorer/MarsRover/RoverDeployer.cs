@@ -29,7 +29,7 @@ public class RoverDeployer
         Random random = new Random();
         Coordinate startingPointOfRover =
             possibleStartingPointOfRover.ToList()[random.Next(possibleStartingPointOfRover.Count())];
-        return new MarsRover(startingPointOfRover, new Dictionary<string, List<Coordinate>>());
+        return new MarsRover(startingPointOfRover);
     }
     
 }
