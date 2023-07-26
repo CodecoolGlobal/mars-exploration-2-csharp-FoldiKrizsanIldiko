@@ -22,7 +22,9 @@ public class MapFileWriter : IMapFileWriter
             { " ", "🟥" },
             { "|", "🟫" },
             { "/", "🟩" },
-            {"A", "🟩"}
+            {"A", "🟡"},
+            {"B","🛸"},
+            
         };
         for (int i = 0; i < map.Representation.GetLength(0); i++)
         {

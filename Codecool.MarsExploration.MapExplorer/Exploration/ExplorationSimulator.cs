@@ -86,6 +86,8 @@ public class ExplorationSimulator
        // Rover is moving
        
        _simulationContext.MarsRover.RoadTaken.Add(RoversCurrentPosition);
+       _simulationContext.Map.Representation[_config.landingPoint.X, _config.landingPoint.Y] = "B";//űrhajó berajzolása
+       _simulationContext.Map.Representation[RoversCurrentPosition.X, RoversCurrentPosition.Y] = "A";//nem rakta rá a térképre az első poziciót
        _simulationContext.Map.Representation[MyChosedNextStep.X, MyChosedNextStep.Y] = "A";
        _simulationContext.MarsRover.CurrentPosition = MyChosedNextStep;
        LoggingTheStep();

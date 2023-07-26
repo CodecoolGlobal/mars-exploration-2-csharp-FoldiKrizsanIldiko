@@ -69,7 +69,7 @@ public class ConfigValidator : IConfigValidator
    {
       var toReturn = _coordinateCalculator.GetAdjacentCoordinates(coordinate, map.GetLength(0))
          .Where(c => map[c.X, c.Y] == " ");
-      // Console.WriteLine($"{toReturn.ToList().Count} {toReturn.ToList().Count >= 1}");
+     
       return toReturn.ToList().Count >= 1;
    }
    
