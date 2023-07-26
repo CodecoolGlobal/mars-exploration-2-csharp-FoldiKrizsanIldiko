@@ -1,4 +1,5 @@
 ﻿using Codecool.MarsExploration.MapExplorer.Configuration;
+using Codecool.MarsExploration.MapExplorer.Exploration;
 using Codecool.MarsExploration.MapExplorer.Logger;
 using Codecool.MarsExploration.MapExplorer.MapLoader;
 using Codecool.MarsExploration.MapExplorer.MarsRover;
@@ -27,17 +28,10 @@ class Program
         int stepNumber = 300;
 
         Config firstConfiguration = new Config(mapFile, landingSpot, resources, stepNumber);
-        
-        // IMapLoader mapLoader = new MapLoader.MapLoader();
-        // mapLoader.Load(mapFile);
 
+        ExplorationSimulator explorationSimulator = new ExplorationSimulator(firstConfiguration);
+        explorationSimulator.CreateSimulationContext();
         
-        IConfigValidator configValidator = new ConfigValidator(firstConfiguration);
-        if (configValidator.IsConfigValid())
-        {
-            RoverDeployer roverDeployer = new RoverDeployer(firstConfiguration);
-            cLogger.Log(roverDeployer.Rover.ToString()); 
-            fLogger.Log(roverDeployer.Rover.ToString());
-        }
+  
     }
 }
