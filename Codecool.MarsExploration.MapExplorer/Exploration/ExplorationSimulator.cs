@@ -24,8 +24,8 @@ namespace Codecool.MarsExploration.MapExplorer.Exploration;
 public class ExplorationSimulator
 {
     public static Config _config;
-   public RoverDeployer _roverDeployer;
-    public  SimulationContext _simulationContext;
+    public RoverDeployer _roverDeployer;
+    public static SimulationContext _simulationContext;
     private static ILogger _cLogger= new ConsoleLogger();
     private static readonly string WorkDir = AppDomain.CurrentDomain.BaseDirectory;
     private static ILogger _fLogger = new FileLogger($@"{WorkDir}\Output\log.txt");// constructoron kívül példányosítani
@@ -43,7 +43,7 @@ public class ExplorationSimulator
     public void CreateSimulationContext()
     {
         Console.WriteLine(_simulationContext.Outcome == ExplorationOutcome.Error);
-        // while (_simulationContext.Outcome == null)
+        // while (SimulationContext.Outcome == null)
         // {
         //     Console.WriteLine("create sim context running");
         //     // SimulationSteps addig fut, amíg nem lesz az outcome-nak értéke
@@ -61,34 +61,7 @@ public class ExplorationSimulator
     //
     //     Step increment. Increment the context step variable by one.//
 
-    public void Movement()
-    {
-       
-        Coordinate MyChosedNextStep;
-        Map myMap = _simulationContext.Map;
-        Coordinate RoversCurrentPosition = _simulationContext.MarsRover.CurrentPosition;
-       var wasThere=  _simulationContext.MarsRover.RoadTaken;
-        var emptyAdjacentFields =
-            FindEmptyAdjacentField.FindEmptyAdjacentFields(_coordinateCalculator, myMap, RoversCurrentPosition, _config.landingPoint).ToList();
-        Console.WriteLine();
-        var PossibleMovesIWasNotThereYet = emptyAdjacentFields.Where(e => !wasThere.Contains(e)).ToList();
-        
-        if (PossibleMovesIWasNotThereYet.Any())
-        {
-            MyChosedNextStep = PossibleMovesIWasNotThereYet[_random.Next(PossibleMovesIWasNotThereYet.Count)]; 
-        }
-        else
-        {
-            MyChosedNextStep = emptyAdjacentFields[_random.Next(emptyAdjacentFields.Count())];
-        }
-       // Rover is moving
-       _simulationContext.MarsRover.RoadTaken.Add(RoversCurrentPosition);
-       _simulationContext.Map.Representation[_config.landingPoint.X, _config.landingPoint.Y] = "B";//spaceship place on map
-       _simulationContext.Map.Representation[RoversCurrentPosition.X, RoversCurrentPosition.Y] = "A";//first position of Rover place on map
-       _simulationContext.Map.Representation[MyChosedNextStep.X, MyChosedNextStep.Y] = "A";
-       _simulationContext.MarsRover.CurrentPosition = MyChosedNextStep;
-       LoggingTheStep();
-    }
+    
     public void ScanningTheSightArea()
     {
         //nézzen szét és nézze meg hol van resource, jegyezze meg
@@ -104,13 +77,13 @@ public class ExplorationSimulator
         throw new NotImplementedException();
     }
 
-    public void LoggingTheStep() // írja hol tart
+    public static void LoggingTheStep() // írja hol tart
     {
         _cLogger.Log($" [{_simulationContext.MarsRover}] {_simulationContext.NumberOfSteps} step");
         _fLogger.Log($" [{_simulationContext.MarsRover}] {_simulationContext.NumberOfSteps} step");
     }
 
-    public void LoggingTheStep(string outcome)// ha eredmény van akkor írja az eredményt
+    public static void LoggingTheStep(string outcome)// ha eredmény van akkor írja az eredményt
     {
         _cLogger.Log($" [{_simulationContext.MarsRover}] {outcome}");
         _fLogger.Log($" [{_simulationContext.MarsRover}] {outcome}");

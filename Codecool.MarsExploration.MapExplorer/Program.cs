@@ -3,6 +3,7 @@ using Codecool.MarsExploration.MapExplorer.Exploration;
 using Codecool.MarsExploration.MapExplorer.Logger;
 using Codecool.MarsExploration.MapExplorer.MapLoader;
 using Codecool.MarsExploration.MapExplorer.MarsRover;
+using Codecool.MarsExploration.MapExplorer.SimulationSteps;
 using Codecool.MarsExploration.MapGenerator.Calculators.Model;
 using Codecool.MarsExploration.MapGenerator.Calculators.Service;
 using Codecool.MarsExploration.MapGenerator.Configuration;
@@ -34,7 +35,7 @@ class Program
 
         ExplorationSimulator explorationSimulator = new ExplorationSimulator(firstConfiguration);
         explorationSimulator.CreateSimulationContext();
-        explorationSimulator.LoggingTheStep();
+        
        //  ICoordinateCalculator coordinateCalculator = new CoordinateCalculator();
        //  IMapLoader mapLoader = new MapLoader.MapLoader();
        //  Map map = mapLoader.Load(mapFile);
@@ -42,11 +43,11 @@ class Program
        // testingEmptyFields.ToList().ForEach(e=>Console.Write(e));
         for (int i = 0; i < 500; i++)
         {
-            explorationSimulator.Movement();
+            Movement.MoveTheRover();
         }
         
         IMapFileWriter fw = new MapFileWriter();
-        fw.WriteMapFile(explorationSimulator._simulationContext.Map,$@"{WorkDir}\Output\mappp.map" );
+        fw.WriteMapFile(Movement.SimulationContext.Map,$@"{WorkDir}\Output\mappp.map" );
 
     }
 }
