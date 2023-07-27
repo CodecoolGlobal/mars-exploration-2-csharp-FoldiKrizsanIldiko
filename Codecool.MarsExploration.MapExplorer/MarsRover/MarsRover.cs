@@ -14,7 +14,7 @@ public class MarsRover
 
     public MarsRover(Coordinate currentPosition, int sightDistance = 2)
     {
-        Id = $"Rover-{_roverCounter}";
+        Id = $"Rover-{_roverCounter++}";
         CurrentPosition = currentPosition;
         SightDistance = sightDistance;
         EncounteredResources = new Dictionary<string, HashSet<Coordinate>>{
