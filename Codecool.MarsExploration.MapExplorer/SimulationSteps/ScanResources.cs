@@ -13,8 +13,13 @@ public static class ScanResources
         var toReturn = coordinateCalculator.GetAdjacentCoordinates(simulationContext.MarsRover.CurrentPosition, simulationContext.Map.Representation.GetLength(0), simulationContext.MarsRover.SightDistance);
         foreach (var c in toReturn)
         {
+            if (simulationContext.Map.Representation[c.X, c.Y] == " ")
+            {
+                simulationContext.Map.Representation[c.X, c.Y] = "C";
+            }
+
             if (simulationContext.MarsRover.EncounteredResources.ContainsKey(simulationContext.Map.Representation[c.X, c.Y]))
-            { 
+            {
                 simulationContext.MarsRover.EncounteredResources[simulationContext.Map.Representation[c.X, c.Y]].Add(c);
             }
         }

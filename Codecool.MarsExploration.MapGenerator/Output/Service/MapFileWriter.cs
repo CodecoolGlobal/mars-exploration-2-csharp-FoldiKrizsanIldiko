@@ -24,7 +24,8 @@ public class MapFileWriter : IMapFileWriter
             { "/", "🟩" },
             {"A", "🟡"},
             {"B","🛸"},
-            
+            {"C","👀"},
+
         };
         for (int i = 0; i < map.Representation.GetLength(0); i++)
         {
