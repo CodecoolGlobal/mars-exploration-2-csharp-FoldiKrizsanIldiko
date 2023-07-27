@@ -1,4 +1,5 @@
 ﻿using Codecool.MarsExploration.MapExplorer.Configuration;
+using Codecool.MarsExploration.MapExplorer.MapLoader;
 using Codecool.MarsExploration.MapGenerator.Calculators.Model;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 
@@ -11,24 +12,24 @@ public class ConfigValidatorTest
     {
         var workDir = AppDomain.CurrentDomain.BaseDirectory;
 
-        yield return new TestCaseData($"{workDir}\\FakeMap.map", new Coordinate(1, 1), new List<string>()
+        yield return new TestCaseData($"{workDir}\\FakeMap1.map", new Coordinate(1, 1), new List<string>()
             { "#", "&", "*", "%" }, 100).Returns(true); //good data
         yield return
-            new TestCaseData($"{workDir}\\FakeMap.map", new Coordinate(0, 0), new List<string>()
+            new TestCaseData($"{workDir}\\FakeMap1.map", new Coordinate(0, 0), new List<string>()
                     { "#", "&", "*", "%" }, 100)
                 .Returns(false); //no free landing coordinate
         yield return
-            new TestCaseData($"{workDir}\\FakeMap.map", new Coordinate(1, 5), new List<string>()
-                { "#", "&", "*", "%" }, 100).Returns(false); //no free for rover
+            new TestCaseData($"{workDir}\\FakeMap1.map", new Coordinate(1, 5), new List<string>()
+                { "#", "&", "*", "%" }, 100).Returns(false); //no free space for rover
         yield return
             new TestCaseData($"{workDir}\\Usings.cs", new Coordinate(1, 5), new List<string>()
                 { "#", "&", "*", "%" }, 100).Returns(false); //.cs file not .map
         yield return
             new TestCaseData($"{workDir}\\FakeMap1.map", new Coordinate(1, 5), new List<string>()
                 { "#", "&", "*", "%" }, 100).Returns(false); //file not exists
-        yield return new TestCaseData($"{workDir}\\FakeMap.map", new Coordinate(1, 1), new List<string>()
+        yield return new TestCaseData($"{workDir}\\FakeMap1.map", new Coordinate(1, 1), new List<string>()
             { "#", "&", "*", "%" }, 0).Returns(false); //steps 0
-        yield return new TestCaseData($"{workDir}\\FakeMap.map", new Coordinate(1, 1), new List<string>()
+        yield return new TestCaseData($"{workDir}\\FakeMap1.map", new Coordinate(1, 1), new List<string>()
             { }, 100).Returns(false); //empty resources
     }
 
@@ -36,10 +37,12 @@ public class ConfigValidatorTest
     public bool ConfigValidatorWithGoodInput(string filePath, Coordinate landingPoint, List<string> resources,
         int steps)
     {
+        MapLoader mapLoader = new MapLoader();
+        
         //arrange
         Config testConfig = new Config(filePath, landingPoint, resources, steps);
         IConfigValidator _configValidator = new ConfigValidator(testConfig);
         //act
-        return _configValidator.IsConfigValid();
+        return _configValidator.IsConfigValid(mapLoader.Load(filePath));
     }
 }

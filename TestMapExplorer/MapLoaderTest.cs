@@ -27,7 +27,7 @@ public class MapLoaderTest
 
         //act
         var workDir = AppDomain.CurrentDomain.BaseDirectory;
-        Map result = mapLoader.Load($"{workDir}\\FakeMap.map");
+        Map result = mapLoader.Load($"{workDir}\\FakeMap1.map");
         //assert
       //  Assert.That(testMap, Is.EqualTo(result));
      

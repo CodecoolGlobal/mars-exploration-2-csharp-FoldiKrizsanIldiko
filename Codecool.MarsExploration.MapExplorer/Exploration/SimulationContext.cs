@@ -4,24 +4,6 @@ using Codecool.MarsExploration.MapGenerator.MapElements.Model;
 
 namespace Codecool.MarsExploration.MapExplorer.Exploration;
 
-
-//The simulation context contains the elements required to run the simulation. It is a data object used by the simulator engine.
-//It must contain at least the following information:
-
-//     The number of steps.
-//
-//     The number of steps required to reach a timeout.
-//
-//     The rover.
-//
-//     The location of the spaceship. -- CONFIG
-//
-//     The map. -- CONFIG
-//
-//     The symbols of resources to monitor. -- CONFING
-//
-//     The exploration outcome.
-
 public class SimulationContext
 {
     public int NumberOfSteps { get; set; }
@@ -32,7 +14,7 @@ public class SimulationContext
     public IEnumerable<string> ResourcesToFind {get;}
     public ExplorationOutcome Outcome { get; set; }
 
-    private MapLoader.MapLoader _mapLoader = new MapLoader.MapLoader();
+    private MapLoader.MapLoader _mapLoader = new ();
 
     public SimulationContext(int numberOfSteps, MarsRover.MarsRover marsRover, Config config)
     {

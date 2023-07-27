@@ -25,9 +25,10 @@
 
     <ItemGroup>
       <None Remove="FakeMap.map" />
-      <Content Include="FakeMap.map">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="bin\Debug\net6.0\Usings.cs" />
     </ItemGroup>
 
 </Project>

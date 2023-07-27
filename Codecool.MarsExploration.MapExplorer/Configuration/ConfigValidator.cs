@@ -16,11 +16,10 @@ public class ConfigValidator : IConfigValidator
      
    }
 
-   public bool IsConfigValid()
+   public bool IsConfigValid(Map map)
    {
       if (!IsFilePathValid()) return false;
-      Map mapOfConfig = _mapLoader.Load(_configuration.filepath);//ez van rossz helyen
-      return IsLandingSpotValid(mapOfConfig) &&  AreResourcesSpecified() && IsTimeoutValid();
+      return IsLandingSpotValid(map) &&  AreResourcesSpecified() && IsTimeoutValid();
    }
    
    private bool IsLandingSpotValid(Map map)

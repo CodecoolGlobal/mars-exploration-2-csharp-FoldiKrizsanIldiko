@@ -8,30 +8,28 @@ namespace Codecool.MarsExploration.MapExplorer.MarsRover;
 
 public class RoverDeployer
 {
-    public Config Configuration;
-    public MarsRover Rover;
+    private readonly Config _configuration;
+    public readonly MarsRover Rover;
     private readonly ICoordinateCalculator _coordinateCalculator = new CoordinateCalculator();
     private readonly IMapLoader _mapLoader = new MapLoader.MapLoader();
-    public Map _map;
+    private Map? _map;
     
-
     public RoverDeployer(Config configuration)
     {
-        Configuration = configuration;
+        _configuration = configuration;
         Rover = CreateAndDeployMarsRover();
     }
 
     private MarsRover CreateAndDeployMarsRover()
     {
-        IConfigValidator configValidator = new ConfigValidator(Configuration);
-        if (!configValidator.IsConfigValid())
+        _map = _mapLoader.Load(_configuration.filepath);
+        IConfigValidator configValidator = new ConfigValidator(_configuration);
+        if (!configValidator.IsConfigValid(_map))
         {
             throw new Exception("Invalid config exception.");
         }
-        
-        _map = _mapLoader.Load(Configuration.filepath);
-        
-        var possibleStartingPointOfRover = _coordinateCalculator.GetAdjacentCoordinates(Configuration.landingPoint, _map.Representation.GetLength(0))
+
+        var possibleStartingPointOfRover = _coordinateCalculator.GetAdjacentCoordinates(_configuration.landingPoint, _map.Representation.GetLength(0))
             .Where(c => _map.Representation[c.X, c.Y] == " ");
         
         Random random = new Random();
@@ -40,5 +38,4 @@ public class RoverDeployer
         
         return new MarsRover(startingPointOfRover);
     }
-    
 }
