@@ -10,18 +10,34 @@ public static class ScanResources
     public static void ScanResource(ICoordinateCalculator coordinateCalculator,
         SimulationContext simulationContext)
     {
-        var toReturn = coordinateCalculator.GetAdjacentCoordinates(simulationContext.MarsRover.CurrentPosition, simulationContext.Map.Representation.GetLength(0), simulationContext.MarsRover.SightDistance);
-        foreach (var c in toReturn)
+        var fieldsToWatchFrom = new HashSet<Coordinate>
         {
-            if (simulationContext.Map.Representation[c.X, c.Y] == " ")
-            {
-                simulationContext.Map.Representation[c.X, c.Y] = "C";
-            }
+            new (simulationContext.MarsRover.CurrentPosition.X,
+                simulationContext.MarsRover.CurrentPosition.Y)
+        };
+        
+        for (int i = 0; i < simulationContext.MarsRover.SightDistance; i++)
+        {
+            var fieldsTWF = new HashSet<Coordinate>();
 
-            if (simulationContext.MarsRover.EncounteredResources.ContainsKey(simulationContext.Map.Representation[c.X, c.Y]))
+            foreach (var coordinate in fieldsToWatchFrom.ToArray())
             {
-                simulationContext.MarsRover.EncounteredResources[simulationContext.Map.Representation[c.X, c.Y]].Add(c);
+                var toReturn = coordinateCalculator.GetAdjacentCoordinates(coordinate, simulationContext.Map.Representation.GetLength(0));
+                foreach (var c in toReturn)
+                {
+                    if (simulationContext.Map.Representation[c.X, c.Y] == " ")
+                    {
+                        simulationContext.Map.Representation[c.X, c.Y] = "C";
+                    }
+    
+                    if (simulationContext.MarsRover.EncounteredResources.ContainsKey(simulationContext.Map.Representation[c.X, c.Y]))
+                    {
+                        simulationContext.MarsRover.EncounteredResources[simulationContext.Map.Representation[c.X, c.Y]].Add(c);
+                    }
+                    fieldsTWF.Add(c);
+                }
             }
+            fieldsToWatchFrom.UnionWith(fieldsTWF);
         }
     }
 }
