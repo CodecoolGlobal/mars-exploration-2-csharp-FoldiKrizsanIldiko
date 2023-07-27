@@ -27,16 +27,35 @@ public class MapFileWriter : IMapFileWriter
             {"C","👀"},
 
         };
-        for (int i = 0; i < map.Representation.GetLength(0); i++)
+        
+        Map innerMap = new Map(CreateDeepCopy(map.Representation), true);
+        for (int i = 0; i < innerMap.Representation.GetLength(0); i++)
         {
-            for (int j = 0; j < map.Representation.GetLength(1); j++)
+            for (int j = 0; j < innerMap.Representation.GetLength(1); j++)
             {
-               if (symbols.TryGetValue(map.Representation[i, j], out string value))
+               if (symbols.TryGetValue(innerMap.Representation[i, j], out string value))
                {
-                    map.Representation[i, j] = value;
+                    innerMap.Representation[i, j] = value;
                }
             }
         }
-        File.WriteAllText(file, map.ToString());
+        File.WriteAllText(file, innerMap.ToString());
+    }
+    
+    private string[,] CreateDeepCopy(string[,] source)
+    {
+        int rows = source.GetLength(0);
+        int cols = source.GetLength(1);
+        string[,] copy = new string[rows, cols];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                copy[i, j] = source[i, j];
+            }
+        }
+
+        return copy;
     }
 }

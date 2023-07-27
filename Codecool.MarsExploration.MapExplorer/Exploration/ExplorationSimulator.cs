@@ -46,6 +46,10 @@ public class ExplorationSimulator
             }
         }
 
+        ShortestPath shortestPath = new ShortestPath();
+        var backToShipPath= shortestPath.FindShortestPath(_simulationContext.Map.Representation,_simulationContext.LocationOfShip, _simulationContext.MarsRover.CurrentPosition
+            );
+       
         Movement.BackToTheShip(_simulationContext);
         IMapFileWriter fw = new MapFileWriter();
         fw.WriteMapFile(_simulationContext.Map,$@"{WorkDir}\Output\mappp.map" );

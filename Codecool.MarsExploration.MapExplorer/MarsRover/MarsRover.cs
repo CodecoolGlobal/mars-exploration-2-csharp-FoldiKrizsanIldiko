@@ -18,9 +18,9 @@ public class MarsRover
         CurrentPosition = currentPosition;
         SightDistance = sightDistance;
         EncounteredResources = new Dictionary<string, HashSet<Coordinate>>{
-            {"#", new HashSet<Coordinate>()},
-            {"&", new HashSet<Coordinate>()},
-            {"*", new HashSet<Coordinate>()},
+            {"#", new ()},
+            {"&", new ()},
+            {"*", new ()},
             {"%", new ()}
         };
         RoadTaken = new List<Coordinate>();
