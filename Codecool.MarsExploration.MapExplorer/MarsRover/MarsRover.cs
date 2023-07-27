@@ -10,7 +10,7 @@ public class MarsRover
     public Dictionary<string, HashSet<Coordinate>> EncounteredResources { get; set; }
 
     private readonly int _roverCounter = 1;
-    public List<Coordinate> RoadTaken;
+    public readonly List<Coordinate> RoadTaken;
 
     public MarsRover(Coordinate currentPosition, int sightDistance = 2)
     {

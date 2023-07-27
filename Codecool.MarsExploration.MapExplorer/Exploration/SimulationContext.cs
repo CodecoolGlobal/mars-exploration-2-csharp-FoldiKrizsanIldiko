@@ -11,10 +11,9 @@ public class SimulationContext
     public MarsRover.MarsRover MarsRover { get; }
     public Coordinate LocationOfShip { get; }
     public Map Map { get; }
-    public IEnumerable<string> ResourcesToFind {get;}
     public ExplorationOutcome Outcome { get; set; }
 
-    private MapLoader.MapLoader _mapLoader = new ();
+    private readonly MapLoader.MapLoader _mapLoader = new ();
 
     public SimulationContext(int numberOfSteps, MarsRover.MarsRover marsRover, Config config)
     {
@@ -23,6 +22,5 @@ public class SimulationContext
         MarsRover = marsRover;
         LocationOfShip = config.landingPoint;
         Map = _mapLoader.Load(config.filepath);
-        ResourcesToFind = config.resources;
     }
 }

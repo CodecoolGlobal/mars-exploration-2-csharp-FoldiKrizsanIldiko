@@ -6,7 +6,7 @@ namespace Codecool.MarsExploration.MapExplorer.SimulationSteps;
 
 public static class Analyze
 {
-    private static Dictionary<string, uint> outcomeCondition = new()
+    private static readonly Dictionary<string, uint> OutcomeCondition = new()
     {
         {"#", 1},
         {"&", 1},
@@ -19,7 +19,7 @@ public static class Analyze
         List<bool> allConditionResults = new List<bool>();
         foreach (var resource in rover.EncounteredResources)
         {
-            allConditionResults.Add(outcomeCondition.ContainsKey(resource.Key) && resource.Value.Count() >= outcomeCondition[resource.Key]);
+            allConditionResults.Add(OutcomeCondition.ContainsKey(resource.Key) && resource.Value.Count() >= OutcomeCondition[resource.Key]);
         }
 
         if (allConditionResults.All(res => res))

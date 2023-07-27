@@ -9,21 +9,18 @@ namespace Codecool.MarsExploration.MapExplorer.Exploration;
 
 public class ExplorationSimulator
 {
-    public static Config _config;
-    public RoverDeployer _roverDeployer;
-    public static SimulationContext _simulationContext;
-    private static ILogger _cLogger= new ConsoleLogger();
+    private static SimulationContext? _simulationContext;
+    private static readonly ILogger CLogger= new ConsoleLogger();
     private static readonly string WorkDir = AppDomain.CurrentDomain.BaseDirectory;
     private static ILogger _fLogger = new FileLogger($@"{WorkDir}\Output\log.txt");
     private  ICoordinateCalculator _coordinateCalculator = new CoordinateCalculator();
 
-    public ExplorationSimulator(Config config)
+    public ExplorationSimulator(Config configuration)
     {
-        _config = config;
-        _roverDeployer = new RoverDeployer(_config);
-        _simulationContext = new SimulationContext(1,_roverDeployer.Rover, _config);
+        Config config = configuration;
+        RoverDeployer roverDeployer = new RoverDeployer(config);
+        _simulationContext = new SimulationContext(1,roverDeployer.Rover, config);
     }
-
 
     public void RunSimulation()
     {   
@@ -58,13 +55,13 @@ public class ExplorationSimulator
 
     public static void LoggingTheStep()
     {
-        _cLogger.Log($" {_simulationContext.MarsRover} {_simulationContext.NumberOfSteps} step");
+        CLogger.Log($" {_simulationContext.MarsRover} {_simulationContext.NumberOfSteps} step");
         _fLogger.Log($" {_simulationContext.MarsRover} {_simulationContext.NumberOfSteps} step");
     }
 
     public static void LoggingTheStep(string typeofEvent)
     {
-        _cLogger.Log($" {typeofEvent} {_simulationContext.MarsRover} ");
+        CLogger.Log($" {typeofEvent} {_simulationContext.MarsRover} ");
         _fLogger.Log($" {typeofEvent} {_simulationContext.MarsRover} ");
     }
 

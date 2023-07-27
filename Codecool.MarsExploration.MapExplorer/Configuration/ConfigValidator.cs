@@ -7,18 +7,17 @@ namespace Codecool.MarsExploration.MapExplorer.Configuration;
 public class ConfigValidator : IConfigValidator
 {
    private readonly Config _configuration;
-   private readonly MapLoader.MapLoader _mapLoader = new ();
    private readonly ICoordinateCalculator _coordinateCalculator = new CoordinateCalculator();
 
    public ConfigValidator(Config configuration)
    {
       _configuration = configuration;
-     
    }
 
    public bool IsConfigValid(Map map)
    {
       if (!IsFilePathValid()) return false;
+      
       return IsLandingSpotValid(map) &&  AreResourcesSpecified() && IsTimeoutValid();
    }
    
@@ -30,7 +29,8 @@ public class ConfigValidator : IConfigValidator
          return true;
       }
       Console.WriteLine("LandingSpot is not empty or has no empty adjacent coordinate.");
-         return false;
+      
+      return false;
    }
 
    private bool IsFilePathValid()
@@ -40,6 +40,7 @@ public class ConfigValidator : IConfigValidator
          return true;
       }
       Console.WriteLine("Filepath is invalid.");
+      
       return false;
    }
 
@@ -51,6 +52,7 @@ public class ConfigValidator : IConfigValidator
       }
 
       Console.WriteLine("Resources are not specified.");
+      
       return false;
    }
 
@@ -61,6 +63,7 @@ public class ConfigValidator : IConfigValidator
          return true;
       }
       Console.WriteLine("Number of steps is zero.");
+      
       return false;
    }
    
