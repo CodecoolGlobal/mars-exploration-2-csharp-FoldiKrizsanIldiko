@@ -4,6 +4,7 @@ using Codecool.MarsExploration.MapExplorer.MarsRover;
 using Codecool.MarsExploration.MapExplorer.SimulationSteps;
 using Codecool.MarsExploration.MapGenerator.Calculators.Service;
 using Codecool.MarsExploration.MapGenerator.Output.Service;
+using Microsoft.Data.Sqlite;
 
 namespace Codecool.MarsExploration.MapExplorer.Exploration;
 
@@ -53,6 +54,7 @@ public class ExplorationSimulator
         Movement.BackToTheShip(_simulationContext);
         IMapFileWriter fw = new MapFileWriter();
         fw.WriteMapFile(_simulationContext.Map,$@"{WorkDir}\Output\mappp.map" );
+        StoringDataInDBFile();
     }
     
 
@@ -71,5 +73,15 @@ public class ExplorationSimulator
     public void StepIncrement()
     {
         _simulationContext.NumberOfSteps++;
+    }
+//need to count the find result!!!!
+    public void StoringDataInDBFile()
+    {
+        var dbConnection = new SqliteConnection($"Data Source ={WorkDir}\\Output\\Simulations.db;Mode=ReadWrite");
+        dbConnection.Open();
+        string queri =
+            $"INSERT INTO MarsRoversRuns(Number_of_steps, resources_found,Outcome,TimeStamp) VALUES ('{_simulationContext.NumberOfSteps}','{100}','{_simulationContext.Outcome}','{DateTime.Now}')";
+       using SqliteCommand command = new SqliteCommand(queri, dbConnection);
+        command.ExecuteNonQuery();
     }
 }
