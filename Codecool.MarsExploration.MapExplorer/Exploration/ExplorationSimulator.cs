@@ -63,7 +63,7 @@ public class ExplorationSimulator
 
     public void Movement()
     {
-        //landing spot legyen egy szimbólummal ellátva, és az legyen kizárva hogy oda nem léphet
+       
         Coordinate MyChosedNextStep;
         Map myMap = _simulationContext.Map;
         Coordinate RoversCurrentPosition = _simulationContext.MarsRover.CurrentPosition;
@@ -71,23 +71,20 @@ public class ExplorationSimulator
         var emptyAdjacentFields =
             FindEmptyAdjacentField.FindEmptyAdjacentFields(_coordinateCalculator, myMap, RoversCurrentPosition, _config.landingPoint).ToList();
         Console.WriteLine();
-       // var nextStep = emptyAdjacentFields.ToList()[_random.Next(emptyAdjacentFields.Count())];
         var PossibleMovesIWasNotThereYet = emptyAdjacentFields.Where(e => !wasThere.Contains(e)).ToList();
         
         if (PossibleMovesIWasNotThereYet.Any())
         {
-            
-           MyChosedNextStep = PossibleMovesIWasNotThereYet[_random.Next(PossibleMovesIWasNotThereYet.Count)]; 
+            MyChosedNextStep = PossibleMovesIWasNotThereYet[_random.Next(PossibleMovesIWasNotThereYet.Count)]; 
         }
         else
         {
             MyChosedNextStep = emptyAdjacentFields[_random.Next(emptyAdjacentFields.Count())];
         }
        // Rover is moving
-       
        _simulationContext.MarsRover.RoadTaken.Add(RoversCurrentPosition);
-       _simulationContext.Map.Representation[_config.landingPoint.X, _config.landingPoint.Y] = "B";//űrhajó berajzolása
-       _simulationContext.Map.Representation[RoversCurrentPosition.X, RoversCurrentPosition.Y] = "A";//nem rakta rá a térképre az első poziciót
+       _simulationContext.Map.Representation[_config.landingPoint.X, _config.landingPoint.Y] = "B";//spaceship place on map
+       _simulationContext.Map.Representation[RoversCurrentPosition.X, RoversCurrentPosition.Y] = "A";//first position of Rover place on map
        _simulationContext.Map.Representation[MyChosedNextStep.X, MyChosedNextStep.Y] = "A";
        _simulationContext.MarsRover.CurrentPosition = MyChosedNextStep;
        LoggingTheStep();
