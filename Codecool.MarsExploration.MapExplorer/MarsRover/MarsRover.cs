@@ -28,6 +28,6 @@ public class MarsRover
 
     public override string ToString()
     {
-        return $"{Id} is on the [{CurrentPosition.X}, {CurrentPosition.Y}] coordinate.";
+        return $"{Id} on [{CurrentPosition.X}, {CurrentPosition.Y}] coordinate.";
     }
 }
