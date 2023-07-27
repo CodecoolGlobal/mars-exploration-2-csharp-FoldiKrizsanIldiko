@@ -36,7 +36,7 @@ public class ShortestPath
                 int newX = current.X + dx[i];
                 int newY = current.Y + dy[i];
 
-                if (IsValid(newX, newY, rows, cols) && !visited[newX, newY] && map[newX, newY] == "A")
+                if (IsValid(newX, newY, rows, cols) && !visited[newX, newY] && (map[newX, newY] == "A"||map[newX, newY] == "C"))
                 {
                     visited[newX, newY] = true;
                     previous[newX, newY] = current;
