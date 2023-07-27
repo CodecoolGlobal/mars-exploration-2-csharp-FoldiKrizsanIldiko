@@ -2,9 +2,11 @@
 using Codecool.MarsExploration.MapExplorer.Configuration;
 using Codecool.MarsExploration.MapExplorer.Logger;
 using Codecool.MarsExploration.MapExplorer.MarsRover;
+using Codecool.MarsExploration.MapExplorer.SimulationSteps;
 using Codecool.MarsExploration.MapGenerator.Calculators.Model;
 using Codecool.MarsExploration.MapGenerator.Calculators.Service;
 using Codecool.MarsExploration.MapGenerator.MapElements.Model;
+using Codecool.MarsExploration.MapGenerator.Output.Service;
 
 namespace Codecool.MarsExploration.MapExplorer.Exploration;
 // Everything is in place to start working on the simulation engine.
@@ -40,32 +42,27 @@ public class ExplorationSimulator
     }
 
 
-    public void CreateSimulationContext()
-    {
-        Console.WriteLine(_simulationContext.Outcome == ExplorationOutcome.Error);
-        // while (SimulationContext.Outcome == null)
-        // {
-        //     Console.WriteLine("create sim context running");
-        //     // SimulationSteps addig fut, amíg nem lesz az outcome-nak értéke
-        //     //
-        // }
-    }
+    public void RunSimulation()
+    {   
+        for (int i = 0; i < _simulationContext.TimeOutSteps; i++)
+        {
+            Movement.MoveTheRover(_simulationContext);
+            StepIncrement();
+            _simulationContext.MarsRover.EncounteredResources = ScanResources.ScanResource(_coordinateCalculator, _simulationContext.Map,
+                _simulationContext.MarsRover.CurrentPosition, _simulationContext.MarsRover);
+        }
 
-    // Movement. The rover needs to determine an adjacent empty spot of the chart to move
-    //
-    // Scanning. The rover needs to scan the area for resources based on how far it can see (its sight).
-    //
-    // Analysis. After the information is gathered, you need to determine whether an outcome is reached.
-    //
-    //     Log. Write the current state of events in the simulation to the log file.//
-    //
-    //     Step increment. Increment the context step variable by one.//
-
-    
-    public void ScanningTheSightArea()
-    {
-        //nézzen szét és nézze meg hol van resource, jegyezze meg
-        //a rover Dictionary adatait kell itt feltölteni - hozzáadni
+        foreach (var resource in _simulationContext.MarsRover.EncounteredResources)
+        {
+            Console.WriteLine(resource.Key);
+            foreach (var value in resource.Value)
+            {
+                Console.WriteLine(value);
+            }
+        }
+        Movement.BackToTheShip(_simulationContext);
+        IMapFileWriter fw = new MapFileWriter();
+        fw.WriteMapFile(_simulationContext.Map,$@"{WorkDir}\Output\mappp.map" );
     }
 
     public bool Analyser()
