@@ -34,20 +34,15 @@ class Program
         Config firstConfiguration = new Config(mapFile, landingSpot, resources, stepNumber);
 
         ExplorationSimulator explorationSimulator = new ExplorationSimulator(firstConfiguration);
-        explorationSimulator.CreateSimulationContext();
+        
+        
+        explorationSimulator.RunSimulation();
         
        //  ICoordinateCalculator coordinateCalculator = new CoordinateCalculator();
        //  IMapLoader mapLoader = new MapLoader.MapLoader();
        //  Map map = mapLoader.Load(mapFile);
        //  IEnumerable<Coordinate> testingEmptyFields = FindEmptyAdjacentField.FindEmptyAdjacentFields(coordinateCalculator, map, new Coordinate(5, 11), landingSpot);
        // testingEmptyFields.ToList().ForEach(e=>Console.Write(e));
-        for (int i = 0; i < 500; i++)
-        {
-            Movement.MoveTheRover();
-        }
-        
-        IMapFileWriter fw = new MapFileWriter();
-        fw.WriteMapFile(Movement.SimulationContext.Map,$@"{WorkDir}\Output\mappp.map" );
 
     }
 }
