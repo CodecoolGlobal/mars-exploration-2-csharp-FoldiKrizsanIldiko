@@ -38,19 +38,36 @@ public class ExplorationSimulator
     {
         _config = config;
         _roverDeployer = new RoverDeployer(_config);
-        _simulationContext = new SimulationContext(0,_roverDeployer.Rover, _config);
+        _simulationContext = new SimulationContext(1,_roverDeployer.Rover, _config);
     }
 
 
     public void RunSimulation()
     {   
-        for (int i = 0; i < _simulationContext.TimeOutSteps; i++)
+        for (int i = 1; i <= _simulationContext.TimeOutSteps; i++)
         {
             Movement.MoveTheRover(_simulationContext);
             StepIncrement();
             _simulationContext.MarsRover.EncounteredResources = ScanResources.ScanResource(_coordinateCalculator, _simulationContext.Map,
                 _simulationContext.MarsRover.CurrentPosition, _simulationContext.MarsRover);
+            
+            ExplorationOutcome outcome = Analyze.CheckOutcome(_simulationContext.MarsRover);
+            
+            if (outcome != ExplorationOutcome.Error)
+            {
+                _simulationContext.Outcome = outcome;
+                LoggingTheStep($"{outcome}");
+                break;
+            }
+
+            if (i == _simulationContext.TimeOutSteps)
+            {
+                _simulationContext.Outcome = ExplorationOutcome.Timeout;
+                LoggingTheStep($"{_simulationContext.Outcome}");
+            }
         }
+
+        
 
         foreach (var resource in _simulationContext.MarsRover.EncounteredResources)
         {
@@ -64,26 +81,18 @@ public class ExplorationSimulator
         IMapFileWriter fw = new MapFileWriter();
         fw.WriteMapFile(_simulationContext.Map,$@"{WorkDir}\Output\mappp.map" );
     }
-
-    public bool Analyser()
-    {
-        //what will be the feltétel
-        //a rover Dictionaryjából szedi az adatokat
-        //minden lépés után nézze meg talált-e amit keresett
-        //nézze meg van-e még lépése?
-        throw new NotImplementedException();
-    }
+    
 
     public static void LoggingTheStep() // írja hol tart
     {
-        _cLogger.Log($" [{_simulationContext.MarsRover}] {_simulationContext.NumberOfSteps} step");
-        _fLogger.Log($" [{_simulationContext.MarsRover}] {_simulationContext.NumberOfSteps} step");
+        _cLogger.Log($" {_simulationContext.MarsRover} {_simulationContext.NumberOfSteps} step");
+        _fLogger.Log($" {_simulationContext.MarsRover} {_simulationContext.NumberOfSteps} step");
     }
 
-    public static void LoggingTheStep(string outcome)// ha eredmény van akkor írja az eredményt
+    public static void LoggingTheStep(string typeofEvent)// ha eredmény van akkor írja az eredményt
     {
-        _cLogger.Log($" [{_simulationContext.MarsRover}] {outcome}");
-        _fLogger.Log($" [{_simulationContext.MarsRover}] {outcome}");
+        _cLogger.Log($" {typeofEvent} {_simulationContext.MarsRover} ");
+        _fLogger.Log($" {typeofEvent} {_simulationContext.MarsRover} ");
     }
 
     public void StepIncrement()
