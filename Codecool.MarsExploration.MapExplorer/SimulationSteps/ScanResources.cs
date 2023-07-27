@@ -7,18 +7,16 @@ namespace Codecool.MarsExploration.MapExplorer.SimulationSteps;
 
 public static class ScanResources
 {
-    public static Dictionary<string, HashSet<Coordinate>> ScanResource(ICoordinateCalculator coordinateCalculator,
-        Map map, Coordinate currentPosition, MarsRover.MarsRover rover)
+    public static void ScanResource(ICoordinateCalculator coordinateCalculator,
+        SimulationContext simulationContext)
     {
-        var toReturn = coordinateCalculator.GetAdjacentCoordinates(currentPosition, map.Representation.GetLength(0), rover.SightDistance);
+        var toReturn = coordinateCalculator.GetAdjacentCoordinates(simulationContext.MarsRover.CurrentPosition, simulationContext.Map.Representation.GetLength(0), simulationContext.MarsRover.SightDistance);
         foreach (var c in toReturn)
         {
-            if (rover.EncounteredResources.ContainsKey(map.Representation[c.X, c.Y]))
+            if (simulationContext.MarsRover.EncounteredResources.ContainsKey(simulationContext.Map.Representation[c.X, c.Y]))
             { 
-                rover.EncounteredResources[map.Representation[c.X, c.Y]].Add(c);
+                simulationContext.MarsRover.EncounteredResources[simulationContext.Map.Representation[c.X, c.Y]].Add(c);
             }
         }
-
-        return rover.EncounteredResources;
     }
 }

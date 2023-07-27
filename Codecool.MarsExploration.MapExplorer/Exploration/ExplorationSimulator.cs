@@ -28,8 +28,7 @@ public class ExplorationSimulator
         {
             Movement.MoveTheRover(_simulationContext);
             StepIncrement();
-            _simulationContext.MarsRover.EncounteredResources = ScanResources.ScanResource(_coordinateCalculator, _simulationContext.Map,
-                _simulationContext.MarsRover.CurrentPosition, _simulationContext.MarsRover);
+            ScanResources.ScanResource(_coordinateCalculator, _simulationContext);
             
             ExplorationOutcome outcome = Analyze.CheckOutcome(_simulationContext.MarsRover);
             

@@ -11,7 +11,7 @@ class Program
     public static void Main(string[] args)
     {
         string mapFile = $@"{WorkDir}\Resources\exploration-0.map";
-        Coordinate landingSpot = new Coordinate(3, 3);
+        Coordinate landingSpot = new Coordinate(25, 28);
         IEnumerable<string> resources = new List<string>
         {
             "#",//mountain"🏔️",
