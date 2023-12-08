@@ -20,7 +20,7 @@ To run MapExplorer, follow these steps:
 4. You will get your explored map at Codecool.MarsExploration.MapExplorer\bin\Debug\net6.0\Output\mappp.map
 
 Sample map:
-![Example Image](/bin/Debug/net6.0/Output/mappp.map)
+![Example Image](Codecool.MarsExploration.MapExplorer/bin/Debug/net6.0/Output/mappp.map)
 
 
 ### Contributing
