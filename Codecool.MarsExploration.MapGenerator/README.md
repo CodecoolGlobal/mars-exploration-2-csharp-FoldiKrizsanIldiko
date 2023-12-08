@@ -19,6 +19,8 @@ To run MapGenerator, follow these steps:
 3. dotnet run --project Codecool.MarsExploration.MapGenerator.csproj
 4. You will get your generated maps at Codecool.MarsExploration.MapExplorer\bin\Debug\net6.0\exploration-x.map
 
+![Example Image](exploration-2.JPG)
+
 ### Contributing
 
 This is a school project, please DO NOT contribute.
