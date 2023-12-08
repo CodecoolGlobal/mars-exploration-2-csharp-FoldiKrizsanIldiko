@@ -19,6 +19,10 @@ To run MapExplorer, follow these steps:
 3. dotnet run --project Codecool.MarsExploration.MapExplorer.csproj
 4. You will get your explored map at Codecool.MarsExploration.MapExplorer\bin\Debug\net6.0\Output\mappp.map
 
+Sample map:
+![Example Image](/bin/Debug/net6.0/Output/mappp.map)
+
+
 ### Contributing
 
 This is a school project, please DO NOT contribute.
